@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spiegu Spēle</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="app">
+        <!-- Setup Screen -->
+        <div id="setup-screen" class="screen active">
+            <div class="container">
+                <div class="header">
+                    <div class="theme-toggle-container">
+                        <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+                            <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="5"/>
+                                <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                            </svg>
+                            <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <h1 id="game-title" class="title">Spiegu Spēle</h1>
+                    <p class="subtitle">Galējā Slepenā Loma Izaicinājums</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4ZM12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 6.34l1.41-1.41M16.24 16.24l1.41-1.41"/>
+                            </svg>
+                            Spēles Iestatījumi
+                        </h2>
+                    </div>
+                    <div class="card-content">
+                        <div class="settings-grid">
+                            <div class="setting-group">
+                                <label class="setting-label">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                                        <circle cx="9" cy="7" r="4"/>
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                                    </svg>
+                                    Spēlētāju skaits
+                                </label>
+                                <div class="counter">
+                                    <button class="counter-btn" id="decrease-players">-</button>
+                                    <div class="counter-value" id="player-count">4</div>
+                                    <button class="counter-btn" id="increase-players">+</button>
+                                </div>
+                            </div>
+
+                            <div class="setting-group">
+                                <label class="setting-label">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                                        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+                                    </svg>
+                                    Spiegu skaits
+                                </label>
+                                <div class="counter">
+                                    <button class="counter-btn" id="decrease-spies">-</button>
+                                    <div class="counter-value" id="spy-count">1</div>
+                                    <button class="counter-btn" id="increase-spies">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="word-packs">
+                            <label class="setting-label">Vārdu komplekti</label>
+                            <div class="pack-grid" id="word-packs"></div>
+                        </div>
+
+                        <div class="info-box">
+                            <h3 class="info-title">💡 Kā spēlēt:</h3>
+                            <ul class="info-list">
+                                <li>• Nododiet ierīci katram spēlētājam, lai redzētu savu lomu</li>
+                                <li>• Spiegiem nezina slepeno vārdu</li>
+                                <li>• Visiem pārējiem ir vienāds slepens vārds</li>
+                                <li>• Diskutējiet un mēģiniet atrast spiegu!</li>
+                            </ul>
+                        </div>
+
+                        <button id="start-game" class="start-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18V6l12 6-12 6z"/>
+                            </svg>
+                            Sākt Spēli
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Playing Screen -->
+        <div id="playing-screen" class="screen">
+            <div class="container">
+                <div class="player-info">
+                    <div class="badge">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Spēlētājs <span id="current-player-num">1</span> no <span id="total-players">4</span>
+                    </div>
+                    <h2 id="player-instruction">Nododiet 1. spēlētājam</h2>
+                    <p class="instruction-text">Pieskarieties, lai privāti redzētu savu lomu</p>
+                </div>
+
+                <div class="card">
+                    <div class="card-content reveal-content">
+                        <div id="role-hidden" class="role-reveal">
+                            <div class="role-icon">👁️</div>
+                            <button id="reveal-role" class="reveal-btn">Nospiediet, lai atklātu lomu</button>
+                        </div>
+
+                        <div id="role-shown" class="role-display hidden">
+                            <div id="spy-role" class="spy-content hidden">
+                                <div class="role-emoji">🕵️</div>
+                                <h3 class="spy-title">JŪS ESAT SPIEGS</h3>
+                                <p class="spy-text">Jūs nezināt slepeno vārdu. Mēģiniet iekļauties!</p>
+                            </div>
+
+                            <div id="civilian-role" class="civilian-content hidden">
+                                <div class="role-emoji">👥</div>
+                                <h3 class="civilian-title">JŪS NEESAT SPIEGS</h3>
+                                <div class="secret-word-box">
+                                    <p class="secret-label">Slepenis vārds ir:</p>
+                                    <p class="secret-word" id="secret-word-display"></p>
+                                </div>
+                            </div>
+
+                            <button id="next-player" class="next-btn">Nākamais spēlētājs</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reset-container">
+                    <button id="reset-game" class="reset-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                            <path d="M21 3v5h-5"/>
+                            <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>
+                            <path d="M3 21v-5h5"/>
+                        </svg>
+                        Jauna Spēle
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="admin-screen" class="screen">
+            <div class="container">
+                <div id="admin-login" class="admin-login">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Administrācijas piekļuve</h2>
+                        </div>
+                        <div class="card-content">
+                            <input type="password" id="admin-password" placeholder="Ievadiet paroli" class="admin-input">
+                            <div class="admin-buttons">
+                                <button id="admin-submit" class="admin-btn">Ienākt</button>
+                                <button id="admin-cancel" class="admin-btn secondary">Atcelt</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="admin-panel" class="admin-panel hidden">
+                    <div class="admin-header">
+                        <h1 class="admin-title">Administrācijas Panelis</h1>
+                        <button id="admin-back" class="back-btn">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 12H5"/>
+                                <path d="M12 19l-7-7 7-7"/>
+                            </svg>
+                            Atpakaļ
+                        </button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Pievienot jaunu vārdu komplektu</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="add-pack-form">
+                                <input type="text" id="new-pack-name" placeholder="Komplekta nosaukums" class="pack-input">
+                                <button id="add-pack" class="add-btn">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M5 12h14"/>
+                                        <path d="M12 5v14"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="admin-word-packs" class="admin-packs"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
