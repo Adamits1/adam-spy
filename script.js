@@ -12,94 +12,92 @@ class SpyGame {
         this.adminClickCount = 0;
         this.theme = localStorage.getItem('spy-game-theme') || 'light';
         
+        this.defaultWordPacks = [
+            {
+                id: 'locations',
+                name: 'Vietas',
+                words: [
+                    'Pludmale', 'Skola', 'Bibliotēka', 'Tirgus', 'Ūdenskrātuve', 'Origo', "Origo tuneļi", 'Autobusu pietura', 'Stadions',
+                    'Skate', 'Skatu tornis', 'Skurstenis', 'Spēju parks', 'Baseins', 'Viesnīca', 'Restorāns', 'Parks', "Vecrīga", "Divāns", "Tualete",
+                    'Kino', 'Teātris', 'Muzejs', 'Birojs', 'Bērnudārzs', 'Universitāte', 'Zooloģiskais dārzs', 'Botāniskais dārzs',
+                    'Pils', 'Lidosta', 'Dzelzceļa stacija', 'Veikals', 'Tirdzniecības centrs', 'Bārs', 'Kafejnīca', 'Pirts', 'Sauna',
+                    'Banka', 'Policija', 'Benzīntanks', 'Būvlaukums', 'Dzirnavas', 'Ezers', 'Upe', 'Mežs', 'Kalns', 'Ala'
+                ]
+            },
+            {
+                id: 'objects',
+                name: 'Priekšmeti',
+                words: [
+                    'Grāmatplaukts', 'Zīmulis', 'Glāze', 'Telefons', 'Dzeramais kauss', 'Kombinētais atslēgu turētājs',
+                    'Dāvanpapīrs', 'Ķivere', 'Spilvens', 'Lampa', 'Spilvens', 'Austiņas', 'Miskaste', 'Skolas soma', 'Krūzīte',
+                    'Galda lampa', 'Ventilators', 'Grāmata', 'Burtnīca', 'Dators', 'Pildspalva', 'Šķīvji', 'Dakšiņa',
+                    'Karote', 'Nazis', 'Durvis', 'Dvielis', 'Trauku veļas mašīna', 'Ledusskapis', 'Mikroviļņu krāsns',
+                    'Trauki', 'Trauku žāvētājs', 'Grīdas slotas', 'Putekļu sūcējs', 'Knaģis', 'Rozetes', 'Paklājs', 'Galdauts'
+                ]
+            },
+            {
+                id: 'activities',
+                name: 'Aktivitātes',
+                words: [
+                    'Skraidīšana', 'Peldēšana', 'Iepirkšanās', 'Zīmēšana', 'Fotografēšana', 'Makšķerēšana',
+                    'Puķu stādīšana', 'Krāsošana', 'Ceļošana', 'Rakstēšana', 'Pastaigāšanās', 'Ritenbraukšana',
+                    'Skrituļošana', "Piedzeršanās", 'Sniega šķūrēšana',
+                    'Dejošana', 'Dziedāšana', 'Kokapstrāde', 'Dārzniecība', 'Medības', 'Pārgājiens', 'Kempings',
+                    'Pārgājiens', 'Airēšana', 'Burāšana', 'Slēpošana', 'Distanču slidošana', 'Basketbols', 'Futbols',
+                    'Hokejs', 'Teniss', 'Badmintons', 'Vingrošana', 'Joga', 'Meditācija', 'Lasīšana', 'Filmēšana'
+                ]
+            },
+            {
+                id: 'animals',
+                name: 'Dzīvnieki',
+                words: [
+                    'Kaķis', 'Suns', 'Gailis', 'Vista', 'Zivs', 'Tauriņš', 'Skudra', 'Bites',
+                    'Krēvētāja', 'Pūce', 'Lapsa', 'Govs', 'Cūka', 'Kāmis', 'Trusis', 'Zilonis'
+                ]
+            },
+            {
+                id: 'klava',
+                name: 'Klāva',
+                words: [
+                    'Roblox', 'MrBeast', 'Pepsi', 'Čipši', 'Kaka', 'Brainrot', 'TikToks',
+                    'Minecrafts', 'YouTube', 'Šokolāde', 'Fortnite', 'Burgeris', 'PlayStation', 'Slime', 'Enerģijas dzēriens'
+                ]
+            },
+            {
+                id: 'lilu',
+                name: 'Lilū',
+                words: [
+                    'Suņu barība', 'Kauls', 'Pavada', 'Kaklasiksna', 'Rotaļlieta', 'Bumba', 'Kucēns',
+                    'Vetārsts', 'Suņu būda', 'Ķepas dvielis', 'Ūdens bļoda', 'Kakām maisiņš',
+                    'Suņu šampūns', 'Knaģu knaibles', 'Skrāpējamā suka', 'Čipēšana'
+                ]
+            },
+            {
+                id: 'zubris',
+                name: 'Zubris',
+                words: [
+                    'Konstitūcija', 'Hipotēze', 'Antropoloģija', 'Demokrātija', 'Relatīvitātes teorija',
+                    'Kosmoloģija', 'Paradokss', 'Fenomenoloģija', 'Ekstrapolācija', 'Pitagora teorēma'
+                ]
+            },
+            {
+                id: 'food',
+                name: 'Ēdiens',
+                words: [
+                    'Pica', 'Zupa', 'Maize', 'Cepumi', 'Jogurts', 'Siers', 'Burgers', 'Kartupeļi',
+                    'Salāti', 'Olas', 'Makaroni', 'Biezpiens', 'Pankūkas', 'Čipsi', "Aukstā zupa", "Boršs", "Banāns"
+                ]
+            },
+            {
+                id: 'countries',
+                name: 'Valstis',
+                words: [
+                    'Latvija', 'Igaunija', 'Lietuva', 'Polija', 'Vācija', 'Francija', 'Spānija', 'Itālija',
+                    'Somija', 'Norvēģija', 'Krievija', 'Ķīna', 'Japāna', 'Kanāda', 'Austrālija', 'Brazīlija'
+                ]
+            }
+        ];
         
-this.defaultWordPacks = [
-  {
-    id: 'locations',
-    name: 'Vietas',
-    words: [
-      'Pludmale', 'Skola', 'Bibliotēka', 'Tirgus', 'Ūdenskrātuve', 'Origo', "Origo tuneļi", 'Autobusu pietura', 'Stadions',
-      'Skate', 'Skatu tornis', 'Skurstenis', 'Spēju parks', 'Baseins', 'Viesnīca', 'Restorāns', 'Parks', "Vecrīga", "Divāns", "Tualete",
-      'Kino', 'Teātris', 'Muzejs', 'Birojs', 'Bērnudārzs', 'Universitāte', 'Zooloģiskais dārzs', 'Botāniskais dārzs',
-      'Pils', 'Lidosta', 'Dzelzceļa stacija', 'Veikals', 'Tirdzniecības centrs', 'Bārs', 'Kafejnīca', 'Pirts', 'Sauna',
-      'Banka', 'Policija', 'Benzīntanks', 'Būvlaukums', 'Dzirnavas', 'Ezers', 'Upe', 'Mežs', 'Kalns', 'Ala'
-    ]
-  },
-  {
-    id: 'objects',
-    name: 'Priekšmeti',
-    words: [
-      'Grāmatplaukts', 'Zīmulis', 'Glāze', 'Telefons', 'Dzeramais kauss', 'Kombinētais atslēgu turētājs',
-      'Dāvanpapīrs', 'Ķivere', 'Spilvens', 'Lampa', 'Spilvens', 'Austiņas', 'Miskaste', 'Skolas soma', 'Krūzīte',
-      'Galda lampa', 'Ventilators', 'Grāmata', 'Burtnīca', 'Dators', 'Pildspalva', 'Šķīvji', 'Dakšiņa',
-      'Karote', 'Nazis', 'Durvis', 'Dvielis', 'Trauku veļas mašīna', 'Ledusskapis', 'Mikroviļņu krāsns',
-      'Trauki', 'Trauku žāvētājs', 'Grīdas slotas', 'Putekļu sūcējs', 'Knaģis', 'Rozetes', 'Paklājs', 'Galdauts'
-    ]
-  },
-  {
-    id: 'activities',
-    name: 'Aktivitātes',
-    words: [
-      'Skraidīšana', 'Peldēšana', 'Iepirkšanās', 'Zīmēšana', 'Fotografēšana', 'Makšķerēšana',
-      'Puķu stādīšana', 'Krāsošana', 'Ceļošana', 'Rakstēšana', 'Pastaigāšanās', 'Ritenbraukšana',
-      'Skrituļošana', "Piedzeršanās", 'Sniega šķūrēšana',
-      'Dejošana', 'Dziedāšana', 'Kokapstrāde', 'Dārzniecība', 'Medības', 'Pārgājiens', 'Kempings',
-      'Pārgājiens', 'Airēšana', 'Burāšana', 'Slēpošana', 'Distanču slidošana', 'Basketbols', 'Futbols',
-      'Hokejs', 'Teniss', 'Badmintons', 'Vingrošana', 'Joga', 'Meditācija', 'Lasīšana', 'Filmēšana'
-    ]
-  },
-  {
-    id: 'animals',
-    name: 'Dzīvnieki',
-    words: [
-      'Kaķis', 'Suns', 'Gailis', 'Vista', 'Zivs', 'Tauriņš', 'Skudra', 'Bites',
-      'Krēvētāja', 'Pūce', 'Lapsa', 'Govs', 'Cūka', 'Kāmis', 'Trusis', 'Zilonis'
-    ]
-  },
-
-{
-  id: 'klava',
-  name: 'Klāva',
-  words: [
-    'Roblox', 'MrBeast', 'Pepsi', 'Čipši', 'Kaka', 'Brainrot', 'TikToks',
-    'Minecrafts', 'YouTube', 'Šokolāde', 'Fortnite', 'Burgeris', 'PlayStation', 'Slime', 'Enerģijas dzēriens'
-  ]
-},
-
-{
-  id: 'lilu',
-  name: 'Lilū',
-  words: [
-    'Suņu barība', 'Kauls', 'Pavada', 'Kaklasiksna', 'Rotaļlieta', 'Bumba', 'Kucēns',
-    'Vetārsts', 'Suņu būda', 'Ķepas dvielis', 'Ūdens bļoda', 'Kakām maisiņš',
-    'Suņu šampūns', 'Knaģu knaibles', 'Skrāpējamā suka', 'Čipēšana'
-  ]
-},
-  {
-    id: 'zubris',
-    name: 'Zubris',
-    words: [
-      'Konstitūcija', 'Hipotēze', 'Antropoloģija', 'Demokrātija', 'Relatīvitātes teorija',
-      'Kosmoloģija', 'Paradokss', 'Fenomenoloģija', 'Ekstrapolācija', 'Pitagora teorēma'
-    ]
-  },
-  {
-    id: 'food',
-    name: 'Ēdiens',
-    words: [
-      'Pica', 'Zupa', 'Maize', 'Cepumi', 'Jogurts', 'Siers', 'Burgers', 'Kartupeļi',
-      'Salāti', 'Olas', 'Makaroni', 'Biezpiens', 'Pankūkas', 'Čipsi', “Aukstā zupa”, “Boršs”, “Banāns”
-    ]
-  },
-  {
-    id: 'countries',
-    name: 'Valstis',
-    words: [
-      'Latvija', 'Igaunija', 'Lietuva', 'Polija', 'Vācija', 'Francija', 'Spānija', 'Itālija',
-      'Somija', 'Norvēģija', 'Krievija', 'Ķīna', 'Japāna', 'Kanāda', 'Austrālija', 'Brazīlija'
-    ]
-  }
-];
 
         this.wordPacks = JSON.parse(localStorage.getItem('spy-game-packs')) || this.defaultWordPacks;
         
