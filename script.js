@@ -156,6 +156,7 @@ class SpyGame {
         });
 
         // Game controls
+
         document.getElementById('start-game').addEventListener('click', () => {
             this.startGame();
         });
@@ -275,37 +276,39 @@ class SpyGame {
         this.updateUI();
     }
 
-    startGame() {
-        if (this.selectedPacks.length === 0) return;
+startGame() {
+     if (this.selectedPacks.length === 0) return;
 
-        const combinedWords = this.selectedPacks.flatMap(packId => {
-            const pack = this.wordPacks.find(p => p.id === packId);
-            return pack ? pack.words : [];
-        });
+     // Combine words and select a random word for the round
+     const combinedWords = this.selectedPacks.flatMap(packId => {
+         const pack = this.wordPacks.find(p => p.id === packId);
+         return pack ? pack.words : [];
+     });
 
-        const randomWord = combinedWords[Math.floor(Math.random() * combinedWords.length)];
-        this.secretWord = randomWord;
+     const randomWord = combinedWords[Math.floor(Math.random() * combinedWords.length)];
+     this.secretWord = randomWord;
 
-        const spyIndices = new Set();
-        while (spyIndices.size < this.spyCount) {
-            spyIndices.add(Math.floor(Math.random() * this.playerCount));
-        }
+     const spyIndices = new Set();
+     while (spyIndices.size < this.spyCount) {
+         spyIndices.add(Math.floor(Math.random() * this.playerCount));
+     }
 
-        this.players = [];
-        for (let i = 0; i < this.playerCount; i++) {
-            this.players.push({
-                id: i + 1,
-                isSpy: spyIndices.has(i),
-                word: spyIndices.has(i) ? undefined : randomWord
-            });
-        }
+     // Reset players with new roles
+     this.players = [];
+     for (let i = 0; i < this.playerCount; i++) {
+         this.players.push({
+             id: i + 1,
+             isSpy: spyIndices.has(i),
+             word: spyIndices.has(i) ? undefined : randomWord
+         });
+     }
 
-        this.currentPlayer = 1;
-        this.gameState = 'playing';
-        this.roleRevealed = false;
-        this.showPlayingScreen();
-        this.updateUI();
-    }
+     this.currentPlayer = 1;
+     this.roleRevealed = false;  // Reset the flag here
+     this.showPlayingScreen();
+     this.updateUI();
+ }
+
 
     revealRole() {
         this.roleRevealed = true;
@@ -338,6 +341,7 @@ class SpyGame {
             this.updateUI();
         } else {
             this.showSetupScreen();
+            this.resetGame()
         }
     }
 
@@ -348,6 +352,9 @@ class SpyGame {
         this.players = [];
         this.adminClickCount = 0;
         this.showSetupScreen();
+        this.secretWord = '';
+        document.getElementById('role-hidden').classList.remove('hidden');
+        document.getElementById('role-shown').classList.add('hidden');
     }
 
     handleTitleClick() {
